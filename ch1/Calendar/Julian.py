@@ -1,7 +1,8 @@
+
+# Implements a proleptic Gregorian calendar date as a Julian day number.
 import datetime as dt
 
 
-# Implements a proleptic Gregorian calendar date as a Julian day number.
 class date:
     def __init__(self, month = 0, day = 0, year = 0):
             if month == 0 or day == 0 or year == 0:
@@ -30,8 +31,15 @@ class date:
             (3 * ((year + 4900 + tmp) // 100) // 4)
     #Returns the Julian Day
     def julian_day(self, date):
-            return self.julianDay
-
+            month, day, year = date
+            tmp = 0
+            if month < 3:
+                tmp = -1
+            date = day - 32075 + \
+            (1461 * (year + 4800 + tmp) // 4) + \
+            (367 * (month - 2 - tmp * 12) // 12) - \
+            (3 * ((year + 4900 + tmp) // 100) // 4)
+            return date
     # Extracts the appropriate Gregorian date component.
     def month(self):                # returning M from (M, d, y)
         return (self.toGregorian())[0]
@@ -50,7 +58,8 @@ class date:
             year = year - 1
         return ((13 * month + 3) // 5 + day \
              + year + year // 4 - year // 100 + year // 400)% 7
-
+  
+   # Returns the day of the week
     def day_of_week_name(self):
         day = self.day_of_week()
         days = {0 : "Monday", 1 : "Tuesday", 2 : "Wednesday", 3 : "Thursday",\
@@ -64,6 +73,7 @@ class date:
         month, day, year = self.toGregorian()
         return "%02d/%02d/%04d" % (month , day, year)
 
+    # Returns String in the requested Format
     def as_Gregorian(self, divchar = "/"):
         month, day, year = self.toGregorian()
         data = [str(month), str(day), str(year)]
@@ -74,25 +84,27 @@ class date:
     def __eq__(self, other_date):
         return self.julianDay == other_date.julianDay
 
+
     def __lt__(self, other_date):
         return self.julianDay < other_date.julianDay
 
     def __le__(self, other_date):
         return self.julianDay <= other_date.julianDay
-
+    
+    # Checks if the input is a valid Greogorian Date
     def is_valid_Gregorian(self, month , day, year):
         if (year >= 1582) & (day <=31) & (month <=12):
             return  True
+
+    # Returns the Month name from the input        
     def month_name(self):
         month, day, year = self.toGregorian()
         Month_name = {1: "January", 2: "Feburary", 3 : "March", \
         4: "April", 5 : "May", 6 : "June", 7 : "July", 8 : "August",\
         9 : "September", 10 : "October", 11: "November", 12: "December"}
-        for key, value in Month_name.items():
-            if month == key:
-                return value
+        return Month_name[month]
 
-
+    # Checks if year is leap year
     def is_leap_year(self):
         month, day, year = self.toGregorian()
         if year%4 == 0:
@@ -100,7 +112,7 @@ class date:
         else:
             return "This Year is not a Leap Year"
 
-
+    # Returns the day of the year
     def day_of_year(self):
         month, day, year = self.toGregorian()
         Month_num = {1: 1, 2: 32, 3 : 61, \
@@ -118,36 +130,35 @@ class date:
                     Month_num[month] = v - 1
                     return (v - 1 + day)
 
+    # Returns the Number of days between input date and other date
     def num_days(self, other_date):
         return self.julianDay - other_date.julianDay
 
+    # Returns the Number of days in the month
     def num_days_in_month(self):
         month, day, year = self.toGregorian()
         Month_num = {1: 31, 2: 29, 3 : 31, \
         4: 30, 5 : 31, 6 : 30, 7 : 31, 8 : 31,\
         9 : 30, 10 : 31, 11: 30, 12: 31}
         if year%4 == 0:
-            for k , v in Month_num.items():
-                if k == month:
-                    return v
+            return Month_num[month]
         else:
-            for k , v in Month_num.items():
-                Month_num[2] = 28
-                if k == month:
-                    return v
+            Month_num[2] = 28
+            return Month_num[month]
 
-
+    # Advance by number of days
     def advanceBy(self, days):
         self.julianDay = self.julianDay + days
         return self.toGregorian()
 
+    # Check if day is a week day
     def is_week_day(self):
         if self.day_of_week() < 5:
             return "This date is a week day"
         else:
             return "This date is not a week day"
 
-
+    # Checks if the date is Solistice
     def is_Solistice(self):
         month, day, year = self.toGregorian()
         month = self.month_name()
@@ -158,7 +169,7 @@ class date:
         else:
             return "Not Winter nor Summer Solistice"
 
-
+     # Checks if the date is Solistice Equinox
     def is_Equinox(self):
         month, day, year = self.toGregorian()
         month = self.month_name()
@@ -169,7 +180,7 @@ class date:
         else:
             return "Not Spring nor Automnal Equinox"
 
-
+    # Returns Date as a gregorian Date
     def toGregorian(self):
         A = self.julianDay + 68569
         B = 4 * A// 146097
