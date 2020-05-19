@@ -1,18 +1,18 @@
 from Julian import date
 
 class activities_calendar:
-
+    # Creates an instances of of the Dates and activities
     def __init__(self, dateFrom, DateTo):
         self.startDate = dateFrom
         self.enddate = DateTo
         self.Activities = list()
         self.dates = dict()
 
-
+    # Returns the number of activities
     def length(self):
         return len(self.Activities)
 
-
+    # Returns the activity of a particular date
     def getActivity(self, date):
         assert self.enddate.julianDay >= date.julianDay >= self.startDate.julianDay, 'Date not in Range of Calendar'
         for k, v in self.dates.items():
@@ -20,13 +20,13 @@ class activities_calendar:
                 return v
         return 'No Activity for this Date'
 
-
+    # Adds a new activity to a date
     def addActivity(self, date, activity):
         assert self.enddate.julianDay >= date.julianDay >= self.startDate.julianDay, 'Date not in Range of Calendar'
         self.Activities.append(activity)
         self.dates[date.toGregorian()] = activity
 
-
+    # Displays a month and the activities in that month
     def displayMonth(self, month):
         Month_name = {1: "January", 2: "Feburary", 3 : "March", \
         4: "April", 5 : "May", 6 : "June", 7 : "July", 8 : "August",\
@@ -34,19 +34,20 @@ class activities_calendar:
         month, year = month
         if month in Month_name.keys():
             months = Month_name[month]
-            print (months+",", str(year))
+            print ("%9s %-1s %-1s" % (months, ",", str(year)))
 
             for k, v in self.dates.items():
                 if k[1] == month and k[2] == year:
                     if k[1] in Month_name.keys():
                         months = Month_name[month]
-                        print (months + ", " + str(k[0])+ ", " + str(k[2]))
+                        print(months, str(k[0]), str(k[2]) )
                         print ("Activities:", v)
                 else:
                     return print("No Activity for this Month")
 
-
+    # Dislay all activities in the calendar
     def displayAll(self):
+        print("  Date  ", "       Activities")
         for k, v in self.dates.items():
             print(k ,":" , v)
 
