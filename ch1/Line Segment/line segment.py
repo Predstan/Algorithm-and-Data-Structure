@@ -31,13 +31,15 @@ class lineSegment(point) :
     def is_horizontal(self):
         return self.ptA.getY() == self.ptB.getY()
 
-    # Returns True if the line is Parallel
+    # Returns True if the line is Parallel to the other
     def is_parallel(self, OtherLine):
         return self.ptA.distance(OtherLine.ptA) == self.ptB.distance(OtherLine.ptB)
 
+    # Returns True if line is Papendicular to the other
     def is_perpendicular(self, OtherLine):
         return (self.is_vertical() & OtherLine.is_horizontal()) or (self.is_horizontal() & OtherLine.is_vertical())
     
+    # Returns the Slope of the line
     def slope(self):
         if self.is_vertical() is True:
             return None
@@ -45,12 +47,12 @@ class lineSegment(point) :
         run =  self.ptB.getX() - self.ptA.getX()
         return rise/run
 
-
+    # Shifts the line by X and Y value
     def shift(self, x = 0, y = 0):
         self.ptA.shift(x, y)
         self.ptB.shift(x, y)
    
-
+    # Returns the Midpoint of the line
     def midpoint(self):
         point_A = (self.ptA.getX() + self.ptB.getX())/2
         point_B = (self.ptA.getY() + self.ptB.getY())/2
