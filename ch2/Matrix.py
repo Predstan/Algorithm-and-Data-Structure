@@ -78,6 +78,6 @@ class Matrix:
         for i in range(self.numRows()):
             for j in range(otherMatrix.numCols()):
                 for k in range(otherMatrix.numRows()):
-                    new[i,j] = self[i,k] * otherMatrix[k, j]
+                    new[i,j] += self[i,k] * otherMatrix[k, j]
         return new
 
