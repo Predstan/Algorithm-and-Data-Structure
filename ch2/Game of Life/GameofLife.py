@@ -2,20 +2,33 @@
 from LifeGrid import LifeGrid
 
 # Configuration for the Live Organisms
-init_cofig = [(1,1), (1, 2), (2, 2), (3, 2)]
+def init_config():
+    live = int(input("Enter Number of Live Cells :"))
+    init_config = [] * live
+    for i in range(live):
+        print("For Cell", i+1)
+        r = int(input("Enter row number :"))
+        c = int(input("Enter column number :"))
+        cell = (r, c)
+        init_config.append(cell)
+    return init_config
+
+
+
 
 # Number of Columns and Rows on Grid
-grid_width = 5
-grid_height = 5
+grid_width = int(input("Enter Grid's Width :"))
+grid_height = int(input("Enter Grid's height :"))
 
 # Number of generation
-num_gen = 8
+num_gen = int(input("Enter Number of Generation :"))
 
 
 def main():
     # Constructs the Main Grid and Configures it
     grid = LifeGrid(grid_width, grid_height)
-    grid.configure(init_cofig)
+    grid.configure(init_config())
+    print("\n")
     
     # Play Game
     print("Start Point")
@@ -37,8 +50,9 @@ def evolve(grid):
 
             # Determine Number of live Neigbors
             neighbours = grid.numLiveNeighbnors(i, j)
+            
 
-            # Regenetion from live and dead cells
+            # Regeneration from live and dead cells
             if (neighbours == 2 and grid.isLiveCell(i, j)) or\
                 (neighbours == 3):
                 live_cells.append((i, j))
