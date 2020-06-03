@@ -40,20 +40,29 @@ def evolve(grid):
 
 # Draw Grid
 def draw(grid):
+    
     num = 0
+
+    # Creates a list for each rows
     row = []
+
+    # iterates over Grid
     for i in range(0, grid.maxRange()[0]+2):
         for j in range(0, grid.maxRange()[1]+2):
-            
+
+            # Determines if cell is a live cell
             if grid.isLiveCell(i, j):
-                row.append("@")
+                row.append("@") # append @ for Livecell
             else:
-                row.append(".")
+                row.append(".") # append . for dead cell
             num += 1
+
+            # print out each row
             if num == grid.maxRange()[1]+2:
                 print("  ".join(row))
                 num = 0
                 row = []
+
 # Execute Main Function
 INIT_CONFIG =[ (3,2), (3,3), (3,4) ]
 num_gen = 8
