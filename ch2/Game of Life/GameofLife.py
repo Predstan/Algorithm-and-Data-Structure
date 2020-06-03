@@ -62,8 +62,16 @@ def evolve(grid):
 
 # Draw Grid
 def draw(grid):
-    for row in range(grid.numRows()):
-            print("  ".join(grid.grid.numRow[row]))
-
+    rows= []
+    num = 0
+    for i in range(grid.numRows()):
+            row = grid.grid.numRow[i]
+            for value in row:
+                rows.append(value)
+                num +=1
+            if num == grid.numCols():
+                print("  ".join(rows))
+                num = 0
+                rows = list()
 # Execute Main Function
 main()
