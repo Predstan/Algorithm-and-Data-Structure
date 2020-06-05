@@ -4,9 +4,9 @@ class Set:
 
     # Creates an Empty Set instance
     def __init__(self, *initialElements):
-        
+
         self.elements = list(initialElements)
-    
+
 
     # Returns the Length of elements in the set
     def __len__(self):
@@ -21,12 +21,12 @@ class Set:
         if element not in self.elements:
             self.elements.append(element)
 
-    # Removes the element if already in the list 
+    # Removes the element if already in the list
     def remove(self, element):
         assert element in self, "The element not in Set"
         self.elements.remove(element)
 
-    # Returns True if two sets are equal
+    # Determines if two sets are equal
     def __eq__(self, setB):
         if len(self) != len(setB):
             return False
@@ -35,8 +35,8 @@ class Set:
 
     # Returns True if set A is a subset of Set B
     def isSubsetOf(self, setB):
-        for element in self:
-            if element not in setB:
+        for element in self.elements:
+            if element not in setB.elements:
                 return False
         return True
 
@@ -44,7 +44,7 @@ class Set:
     def properSet(self, setB):
         return self.isSubsetOf(setB) and self != setB
 
-    
+    # Returns the Items in the Set as String
     def __str__(self):
        return '{%s}' % str(self.elements).strip("[]")
 
@@ -58,7 +58,7 @@ class Set:
                 newSet.elements.append(element)
         return newSet
 
-    # Returns the Intersect of Set A and Set B  as a new set 
+    # Returns the Intersect of Set A and Set B  as a new set
     def intersect(self, setB):
         newSet = Set()
         for element in self:
@@ -106,11 +106,6 @@ class Set:
                 return False
         return True
 
-
-
-
-
-
     # Iterates over the set
     def __iter__(self):
         return SetIterator(self.elements)
@@ -124,7 +119,7 @@ class SetIterator(Set):
         self.elements = elements
         self.ndx = 0
 
-    # Returns the Iteration 
+    # Returns the Iteration
     def __iter__(self):
         return self.elements
 
@@ -134,15 +129,27 @@ class SetIterator(Set):
             new = self.elements[self.ndx]
             self.ndx += 1
             return new
-        
+
         raise StopIteration
 
 
+setA = Set()
+setA.add(0)
+setA.add(2)
+setA.add(3)
+setA.add(1)
+setA.add(1)
+setA.add(6)
 
-get = Set(8, 9, 1, 6, 100)
-hide = Set(8, 9, 1, 6, 7, 2, 3, 4)
-print(len(hide))
-print(get.properSet(hide))
-print(get.__str__())
-    
-    
+setB = Set()
+setB.add(1)
+setB.add(1)
+setB.add(2)
+setB.add(8)
+
+print(setB)
+print(setA)
+print(setA * setB)
+print(setA - setB)
+print(setA + setB)
+print(6 in setA)
