@@ -72,6 +72,18 @@ class Set:
                 ndx = newSet.findPosition(element)
                 newSet.elements.insert(ndx, element)
         return newSet
+
+    # Determines if 2 Sets are equal
+    def __eq__(self, setB):
+
+        if len(self) != len(setB):
+            return False
+        else: 
+            for i in range(len(self)):
+                if self.elements[i] != setB.elements[i]:
+                    return False
+            return True
+
     # Returns the union of unique elements of Set A and Set B as a new set
     def __add__(self, setB):
         return self.union(setB)
@@ -160,4 +172,6 @@ print(setA * setB)
 print(setA - setB)
 print(setA + setB)
 print(6 in setA)
+
+print(setA == setB)
 
