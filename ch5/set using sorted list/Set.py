@@ -48,11 +48,35 @@ class Set:
     # Returns the Union of Set A and Set B as a new set
     def union(self, setB):
         newSet = Set()
-        newSet.elements.extend(self.elements)
-        for element in setB:
-            if element not in self.elements:
-                ndx = newSet.findPosition(element)
-                newSet.elements.insert(ndx, element)
+        a = 0
+        b = 0
+        # Merge the two lists together until one is empty.
+        while a < len(self) and b < len(setB):
+            valueA = self.elements[a]
+            valueB = setB.elements[b]
+            if valueA < valueB:
+                newSet.elements.append(valueA)
+                a += 1
+            elif valueA > valueB:
+                newSet.elements.append(valueB)
+                b += 1
+                
+            # Only one of the two duplicates are appended.
+            else:
+                newSet.elements.append(valueA)
+                a += 1
+                b += 1
+
+        # If listA contains more items, append them to newList.        
+        while a < len(self):
+            newSet.elements.append(self.elements[a])
+            a += 1
+        
+        # Or if listB contains more, append them to newList.
+        while b < len(setB):
+            newSet.elements.append(setB.elements[b])
+            b +=  1
+
         return newSet
 
     # Returns the Intersect of Set A and Set B as a new set
@@ -166,11 +190,11 @@ setB.add(2)
 setB.add(8)
 
 setB.remove(8)
+print(setA + setB)
 print(setB)
 print(setA)
 print(setA * setB)
 print(setA - setB)
-print(setA + setB)
 print(6 in setA)
 
 print(setA == setB)
