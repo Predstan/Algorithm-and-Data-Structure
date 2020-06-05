@@ -5,7 +5,7 @@ def binarysearch(thelist, target):
     high = len(thelist)-1
 
     # Repeatedly subdivide the sequence in half until the target is found.
-    while low < high:
+    while low <= high:
         # Find the midpoint of the sequence.
         mid = (high + low) // 2
 
