@@ -2,8 +2,12 @@
 
 class Set:
     # Creates an empty set instance.
-    def __init__(self):
+    def __init__(self, *initialElement):
         self.elements = list()
+
+        for i in range(len(initialElement)):
+            self.add(initialElement[i])
+
 
     # Returns the number of items in the set
     def __len__(self):
@@ -135,7 +139,7 @@ class SetIterator:
 
 
 # TEST
-setA = Set()
+setA = Set(5, 6, 9)
 setA.add(0)
 setA.add(2)
 setA.add(3)
@@ -149,6 +153,7 @@ setB.add(1)
 setB.add(2)
 setB.add(8)
 
+setB.remove(8)
 print(setB)
 print(setA)
 print(setA * setB)
