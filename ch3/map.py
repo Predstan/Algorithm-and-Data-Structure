@@ -39,7 +39,7 @@ class Map:
     def remove(self, key):
         ndx = self.findPosition( key )
         assert ndx is not None, "Invalid Key"
-        self.map.remove(key)
+        self.map.remove(self.map[ndx])
 
     # Iterates over Keys in the Map
     def __iter__(self):
@@ -49,7 +49,7 @@ class Map:
     # Otherwise, returms None
     def findPosition(self, key):
         for i in range(len(self.map)):
-            if self.map[i] == key:
+            if self.map[i].key == key:
                 return i
         return None
 
@@ -72,11 +72,11 @@ class Map:
         
         return "Invalid Key"
 
-
+    # Returns the Array of keys
     def keyArray(self):
         keyArray = Array(len(self))
         for i in range(len(self)):
-            keyArray[i] = self[i]
+            keyArray[i] = self.map[i].key
 
 
 # Class for Key Value parts
@@ -87,7 +87,7 @@ class MapEntry:
         self.key = key
  
 
-class mapIterator(Map):
+class mapIterator:
 
     def __init__(self, thelist):
         self.thelist = thelist
@@ -99,12 +99,16 @@ class mapIterator(Map):
 
 
     def __next__(self):
-        if len(self.ndx) < len(self.thelist):
-            key = self.thelist[self.ndx]
+        if self.ndx < len(self.thelist):
+            key = self.thelist[self.ndx].key
             self.ndx += 1
             return key
 
         raise StopIteration
 
 
+hey = Map()
+hey.add("hey", 78)
+hey.add("hi", 80)
 
+print(hey["hey"])
