@@ -2,7 +2,7 @@ def binarysearch(thelist, target):
 
     # Start with the entire sequence of elements.
     low = 0
-    high = len(thelist)-1
+    high = len(thelist) - 1
 
     # Repeatedly subdivide the sequence in half until the target is found.
     while low <= high:
@@ -15,7 +15,7 @@ def binarysearch(thelist, target):
 
         # Or does the target precede the midpoint?
         elif thelist[mid] > target:
-            high = mid - 1 
+            high = mid - 1
         # Or does it follow the midpoint?
         else:
             low = mid + 1
@@ -29,9 +29,9 @@ def bubbleSort(thelist):
     n = 0
 
     # Perform n-1 bubble operations on the sequence
-    for i in range(len(thelist)-1, 0, -1): 
+    for i in range(len(thelist)-1, 0, -1):
 
-        # Bubble the largest item to the end.   
+        # Bubble the largest item to the end.
         for j in range(i):
             # Replace if the value is larger than the next value
             if thelist[j] > thelist[j+1]:
@@ -40,15 +40,15 @@ def bubbleSort(thelist):
                 thelist[j+1] = tmp
                 n += 1
 
-        # Terminates if there was no replacement of values in one bubbling  
+        # Terminates if there was no replacement of values in one bubbling
         if n == 0:
             return thelist
-        
+
     return thelist
 
 # Sorts a sequence in ascending order using the selection sort algorithm.
 def selectionSort(thelist):
-    
+
     n = len(thelist)
     for i in range(n - 1):
         # Assume the ith element is the smallest.
@@ -89,7 +89,6 @@ def insertionSort(thelist):
         thelist[pos] = value
     return thelist
 
-
 # Modified version of the binary search that returns the index within
 # a sorted sequence indicating where the target should be located.
 def findSortedPostion(thelist, target):
@@ -102,10 +101,10 @@ def findSortedPostion(thelist, target):
         if thelist[mid] == target:
             # Index of the target.
             return mid
-        
+
         if thelist[mid] > target:
             high = mid - 1
-        
+
         else:
             low = mid + 1
     # Index where the target value should be.
@@ -136,8 +135,56 @@ def MergeSortedLists(listA, listB):
     while b < len(listB):
         newList.append(listB[b])
         b += 1
-    
+
     return newList
-        
 
+# Return the first position of items occurring multiple times
+def FindFirstPosition(thelist, target):
 
+    # Start with the entire sequence of elements.
+    low = 0
+    high = len(thelist) - 1
+
+    # Repeatedly subdivide the sequence in half until the target is found.
+    while low <= high:
+        # Find the midpoint of the sequence.
+        mid = (high + low) // 2
+
+        # Does the midpoint contain the target?
+        if (thelist[mid] == target) and (mid == 0 or target > thelist[mid-1]):
+            return mid
+
+        # Or does the target precede the midpoint?
+        elif thelist[mid] < target:
+           low = mid + 1
+        # Or does it follow the midpoint?
+        else:
+            high = mid - 1
+
+    # If the sequence cannot be subdivided further, we're done.
+    return low
+# Return the Last position of items occurring multiple times
+def FindLastPosition(thelist, target):
+
+    # Start with the entire sequence of elements.
+    low = 0
+    high = len(thelist) - 1
+
+    # Repeatedly subdivide the sequence in half until the target is found.
+    while low <= high:
+        # Find the midpoint of the sequence.
+        mid = (high + low) // 2
+
+        # Does the midpoint contain the target?
+        if (thelist[mid] == target) and (mid == 0 or target < thelist[mid+1]):
+            return mid
+
+        # Or does the target precede the midpoint?
+        elif thelist[mid] > target:
+            high = mid - 1
+        # Or does it follow the midpoint?
+        else:
+            low = mid + 1
+
+    # If the sequence cannot be subdivided further, we're done.
+    return low
