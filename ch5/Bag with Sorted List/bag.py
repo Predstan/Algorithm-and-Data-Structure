@@ -11,12 +11,12 @@ class bag:
 
     # Determines if item is contained in the Bag
     def __contains__(self, element):
-        first, last = self.findPosition(element)
-        return first < len(self) and element == self.elements[last]
+        first = self.findFirstposition(element)
+        return first < len(self) and element == self.elements[first]
 
     # Adds item to the bag
     def add(self, element):
-        first = self.findPosition(element)[0]
+        first = self.findFirstposition(element)
         self.elements.insert(first, element)
 
     # Returns the number of an item in the Bag
@@ -123,12 +123,8 @@ hi.add(90)
 hi.add(140)
 
 hi.remove(140)
-hi.remove(90)
+
 
 print(hi.numOf(1))
 
-
-
-
-for i in hi:
-    print (i)
+print(90 in hi)
