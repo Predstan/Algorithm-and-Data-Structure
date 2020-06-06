@@ -1,4 +1,4 @@
-# Implentation of Life Grid with Binary Search and Sorted List
+# Implementation of Life Grid with Binary Search and Sorted List
 class sparseLifeGrid:
     # Creates and Infinite-Sized Grid
     def __init__(self):
