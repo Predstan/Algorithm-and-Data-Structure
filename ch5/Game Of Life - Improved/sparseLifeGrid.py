@@ -18,12 +18,12 @@ class sparseLifeGrid:
 
     # Returns the minimum row and col of Grid
     def minRange(self):
-        row = 0
-        col = 0
+        row = None
+        col = None
         for element in self.elements:
-            if element.row <= row:
+            if element.row <= row or row == None:
                 row = element.row
-            if element.col <= col:
+            if element.col <= col or col == None:
                 col = element.col
             
         return row, col
