@@ -58,23 +58,35 @@ class colormap:
 
         # Is color in the Map
         if true == True:
-            return color
+            return red, green, blue
         
         # If color not in Map
         else:
+            if ndx-1 >= 0 and ndx < len(self.color):
+                low = self.color[ndx-1] # color less than color but nearest
+                high = self.color[ndx] #color larger than color but nearest
             
-            low = self.color[ndx-1] # color less than color but nearest
-            high = self.color[ndx] #color larger than color but nearest
-            
-            # Is this color larger than all the color in the map
-            if high == None or ndx > len(self.color):
-                high_red, high_green, high_blue = (0, 0, 0)
+            elif ndx >= len(self.color):
+                low = self.color[ndx-1]
                 low_red, low_green, low_blue = (low.red, low.green, low.blue)
                 # Return the largest Color in the List
                 return low.red, low.green, low.blue
 
+            else:
+                high = self.color[ndx]
+                high_red, high_green, high_blue = (high.red, high.green, high.blue)
+                # Return the largest Color in the List
+                return high.red, high.green, high.blue
+
+            # Is this color larger than all the color in the map
+            if high == None:
+                low = self.color[ndx-1]
+                return low.red, low.green, low.blue
+                        
             # If Color is between two colors
             else:
+                low = self.color[ndx-1] # color less than color but nearest
+                high = self.color[ndx] #color larger than color but nearest
                 # color less than color but nearest
                 low_red, low_green, low_blue = (low.red, low.green, low.blue) 
                 #color larger than color but nearest
@@ -127,7 +139,7 @@ class colormap:
                 low = mid + 1
         # Determines if not found, Returns the position where Color is supose to be 
         return low, None
-        
+
 # Storage Class for Color Intensity
 class RGBColor:
     def __init__(self, red, green, blue):
@@ -136,25 +148,3 @@ class RGBColor:
         self.blue = blue
 
 
-# TEST
-color = colormap(10)
-color.add(4, 5, 6)
-color.add(5, 7, 8)
-color.add(2, 3, 5)
-color.add(3, 5, 6)
-print(len(color))
-print((4, 3, 5) in color)
-print((3, 5, 6) in color)
-
-print(len(color))
-print((3, 5, 6) in color)
-color.remove(3, 5, 6)
-print(len(color))
-
-print((3, 5, 6) in color)
-
-for value in color:
-    if value!= None:
-        print ((value.red, value.green, value.blue))
-print(color.map((3, 7, 90)))
-print(color.map((3, 6, 0)))
