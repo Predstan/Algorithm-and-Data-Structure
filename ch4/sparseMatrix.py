@@ -22,7 +22,7 @@ class sparseMatrix:
         if ndx is not None:
             return self.elements[ndx].value
         else:
-            return 0.0
+            return 0
 
     # Sets the value of the row and col using x[i, j] = value
     def __setitem__(self, ndxTuple, value):
@@ -49,7 +49,7 @@ class sparseMatrix:
                    " Row and Columns for both Matrix must be equal"
         # Creates a Matrix for the result of Addition
         MatC = sparseMatrix(self.numRows, self.numCols)
-        
+
         # Duplicates the values of Matrix A into the result Matrix
         for element in self.elements:
             dup = MatrixElement(element.row, element.col, element.value)
@@ -62,7 +62,7 @@ class sparseMatrix:
 
             # Sets the value of the row and column into the result matrix
             MatC[element.row, element.col] = value
-        
+
         return MatC
 
     # Returns the Subtraction two Matrix using A - B
@@ -73,7 +73,7 @@ class sparseMatrix:
 
         # Creates a Matrix for the result of Subtraction
         MatC = sparseMatrix(self.numRows, self.numCols)
-        
+
         # Duplicates the values of Matrix A into the result Matrix
         for element in self.elements:
             dup = MatrixElement(element.row, element.col, element.value)
@@ -86,54 +86,35 @@ class sparseMatrix:
 
             # Sets the value of the row and column into the result matrix
             MatC[element.row, element.col] = value
-        
+
         return MatC
-        
+
     # Returns the Multiplication of Two Matrices using A*B
     def __mul__(self, matB):
-            
+
         # Creates a Matrix for the result of the Multiplication
-        matC = sparseMatrix(self.numRows, self.numCols)
-
-        # Gets the Transpose of Matrix B
-        matB_transpose = matB.transpose()
-
-        # Iterates over the value of Matrix A and transpose of B
+        matC = sparseMatrix(self.numRow(), matB.numCol())
+        
+        # Iterates Over Non Zero Elments in Matrix A
         for element_A in self.elements:
-            for element_B in matB_transpose.elements:
+            # Obtain the Value
+            value = element_A.value
+            # Iterates Over B
+            for element_B in matB.elements:
+                # Determine if the value on the row as same column of Mat A element
+                if element_A.col == element_B.row:
+                    # Multiplies this value by value in Mat A
+                    value_now = value * element_B.value
+                    # Puts this Value into New Matrix with Row of A as ite row
+                    # And Column of B as its Column
+                    matC[element_A.row, element_B.col] += value_now
 
-                # Determines if col of value in A and transpose of B are equal and multiplies their value
-                if element_A.col == element_B.col:
-                    value = self[element_A.row, element_A.col] * matB_transpose[element_B.row, element_B.col]
-
-                    # Iterates over the value of Matrix A and transpose of B the second time
-                    for otherA in self.elements:
-                        for otherB in matB_transpose.elements:
-
-                            # Determines values that has the same column value
-                            # And if the row is equal to the row of value from Matrix A
-                            # And if the column is equal to the row of value from transpose of Matrix B
-                            if otherA.col == otherB.col \
-                                and otherA.row == element_A.row \
-                                and otherB.row == element_B.row:
-
-                                # Multiply both values from Matrix A and transpose of B
-                                this = self[otherA.row, otherA.col] * matB_transpose[otherB.row, otherB.col]
-                                     
-                                     # Determines that this result is not equal to the first value
-                                if value != this:
-
-                                    # Adds this result to the value 
-                                    value += this
-                        # Appends the result to the result Matrix
-                    element = MatrixElement(element_A.row, element_B.row, value)
-                    matC.elements.append(element)
-                
         return matC
+
 
     # Returns the transpose of the Matrix
     def transpose(self):
-        
+
         # Creates a Trasnpose Matrix
         mat_transpose = sparseMatrix(self.numRows, self.numCols)
 
@@ -162,7 +143,7 @@ class MatrixElement:
         self.row = row
         self.col = col
         self.value = value
-        
+
 
 #TEST
 
@@ -180,10 +161,9 @@ MatB[3, 1] = 8
 transpose = MatB.transpose()
 
 
-MatC = MatA-MatB
+MatC = MatA*MatB
 
 print(MatC[1, 1])
 print(MatC[1, 2])
 print(MatC[2, 1])
 print(MatC[2, 2])
-
