@@ -1,6 +1,6 @@
 # Algorithm-and-Data-Structure
 Learning Algorithm and Data Structure using Python Programming Language in order to further my career in Computer Science
-# These are Exercises and Programming Projects found in Textbook named Data Structures and Algorithm using python by Rance D. Necaise
+# These are Exercises and Programming Projects in Data Structures and Algorithm using python Textbook by Rance D. Necaise
 # See Illustration of each Chapters below
 
 # Chapter 1
@@ -29,3 +29,8 @@ Learning Algorithm and Data Structure using Python Programming Language in order
 3. Bubble Sort, Selection Sorting, Insertion Sort
 4. Maintaining a Sorted List, Maintaining a Sorted List
 5. Comparing the Implementations 
+
+# Chapter 6 - LinkedList
+1. Singly LinkedList, Traversing the Nodes,  Searching for a Node,  Prepending Nodes,Removing Nodes
+2. Using a Tail Reference
+3. The Sorted Linked List
