@@ -44,10 +44,13 @@ class Map:
 
     # Returns the Keys and Values in the Map as a String
     def __str__(self):
-        elements = []
+        result = ""
         for element in self.elements:
-            elements.append((str(element.key) + ' : ' + str(element.value)))
-        return '{%s}' % str(elements).strip("[]").strip("()").strip("''").replace("'", "")
+            if element != self.elements[-1]:
+                result += str(element.key) + ": " + str(element.value) + ", "
+            else:
+                result += str(element.key) + ": " + str(element.value)
+        return '{%s}' % result
 
     # Helper to Find the proper position of a key
     def findPosition(self, key):
