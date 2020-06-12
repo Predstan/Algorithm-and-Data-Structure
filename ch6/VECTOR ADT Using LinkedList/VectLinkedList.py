@@ -1,8 +1,12 @@
+# Implementation of Vector ADT using Linked List
+
 class Vector:
+    # Creates an empty Vector
     def __init__(self):
         self.Vectorhead = None
         self.tail = self.Vectorhead
 
+    # Returns the length of the vector
     def __len__(self):
         number = 0
         curNode = self.Vectorhead
@@ -11,6 +15,7 @@ class Vector:
             curNode = curNode.next
         return number
 
+    # Determines if an element is in the Vector
     def __contains__(self, item):
         curNode = self.Vectorhead
 
@@ -23,6 +28,7 @@ class Vector:
         else:
             return False
 
+    # Returns the item at an index
     def __getitem__(self, ndx):
         assert ndx >= 0 and ndx < len(self),\
              "index Out of Range"
@@ -40,6 +46,7 @@ class Vector:
         if curNode is not None and n == ndx:
             return curNode.data
 
+    # Sets the value of an index
     def __setitem__(self, ndx, value):
 
         curNode = self.Vectorhead
@@ -47,7 +54,7 @@ class Vector:
         preNode = None
         n = 0
 
-            
+        # Contineus to  iterate the list until it reaches the index 
         while curNode is not None and n < ndx:
             n += 1
             preNode = curNode
@@ -67,6 +74,7 @@ class Vector:
                 preNode.next = newNode
                 self.tail = newNode
 
+    # Appends an element to the last of of the vector
     def append(self, value):
         newNode = VectorNode(value)
         if self.Vectorhead is None:
@@ -76,6 +84,7 @@ class Vector:
             self.tail.next = newNode
             self.tail = newNode
 
+    # Insert an element to an indext in the List
     def insert(self, ndx, value):
         curNode = self.Vectorhead
         preNode = None
@@ -99,6 +108,7 @@ class Vector:
                 preNode.next = newNode
                 self.tail = newNode
 
+    # Remove an item from the vector
     def remove(self, item):
         assert item in self, " Item not in List"
         
@@ -121,7 +131,7 @@ class Vector:
             else:
                 preNode.next = curNode.next
                 return curNode.data
-
+    # Returns the items in the vector as a string
     def __str__(self):
         result = list()
         curNode = self.Vectorhead
@@ -131,6 +141,8 @@ class Vector:
 
         return str(result)
 
+    # Removes an Index from the List and
+    # Shift the List to cover the space
     def pop(self, ndx):
         assert ndx >= 0 and  ndx < len(self),\
              " Index out of Range"
@@ -153,6 +165,7 @@ class Vector:
             else:
                 preNode.next = curNode.next
 
+    # Returns the indext of an item
     def indexOf(self, item):
         assert item in self, " Item not in List"
         curNode = None
@@ -165,37 +178,49 @@ class Vector:
         if curNode is not None and curNode.data == item:
             return n
 
-
+    # Extends the List with another List
     def extend(self, VectorB):
         self.tail.next = VectorB.Vectorhead
         self.tail = VectorB.tail
 
+    # Returns the Indices from and to
     def SubVector(self, From, to):
         curNode = self.Vectorhead
         n = 0
-        m = 0
+        newNode = None
         newVector = Vector()
 
         while curNode is not None and n < From:
             n += 1
-            m += 1
             curNode = curNode.next
 
+        newNode = VectorNode(curNode.data)
+        newVector.Vectorhead = newNode
+        newVector.tail = newVector.Vectorhead
+        curNode = curNode.next
+        n += 1
+
         while curNode is not None and n < to:
-            m +=1
-            newVector.append(curNode.data)
+            n += 1
+            newNode = VectorNode(curNode.data)
+            newVector.tail.next = newNode
+            newVector.tail = newNode
+
+            curNode = curNode.next
 
         return newVector
 
+    # Returns the Iterator of the Vector List
     def __iter__(self):
         return VectorIterator(self.Vectorhead)
 
-
+# The LinkedList for Vector
 class VectorNode:
     def __init__(self, data):
         self.data = data
         self.next = None
 
+# Class for Vector Iterator
 class VectorIterator(object):
     def __init__(self, head):
         self.head = head
@@ -248,8 +273,7 @@ A.append(0)
 A.append(0)
 A.append(0)
 A.extend(B)
-A
 print(35 in A)
-
+B = A.SubVector(7, 10)
 print(A)
-
+print(B)
