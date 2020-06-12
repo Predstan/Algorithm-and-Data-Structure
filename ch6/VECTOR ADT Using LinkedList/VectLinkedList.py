@@ -133,13 +133,18 @@ class Vector:
                 return curNode.data
     # Returns the items in the vector as a string
     def __str__(self):
-        result = list()
+        result = ""
         curNode = self.Vectorhead
         while curNode is not None:
-            result.append(curNode.data)
+            if curNode.next is not None:
+                result += str(curNode.data) + ", "
+
+            else:
+                result += str(curNode.data)
+    
             curNode = curNode.next
 
-        return str(result)
+        return '[%s]' % result
 
     # Removes an Index from the List and
     # Shift the List to cover the space
